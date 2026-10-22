@@ -1,0 +1,25 @@
+ODONTOPOINT - ACTUALIZACION DE COMPROBANTES DE PAGO
+
+1. Abra MySQL Workbench.
+2. Abra y ejecute: sql/03-mejora-evidencias.sql
+   Puede ejecutarlo aunque ya lo haya ejecutado antes.
+   La nueva versión crea la tabla comprobantes_pago.
+3. Verifique que exista la tabla: comprobantes_pago.
+4. Ejecute el proyecto Spring Boot.
+
+NUEVO FLUJO
+- Abra la historia del paciente.
+- Entre en "04 Tratamiento y pagos".
+- Pulse "Registrar pago".
+- En "Acta / comprobante (captura)" seleccione una imagen PNG/JPG.
+- Complete importe y firmante.
+- Pulse "Registrar" y luego "Guardar historia".
+- Al volver a abrir la historia, la fila del pago muestra la miniatura/enlace de la captura.
+
+CONSENTIMIENTO
+- Se consulta en "05 Consentimiento y archivos".
+- Los documentos firmados aparecen con miniatura y enlace para abrirlos.
+
+EVIDENCIAS CLINICAS
+- Ya no recibe capturas de pago.
+- Se utiliza solo para fotos de tratamientos y otras evidencias clínicas.

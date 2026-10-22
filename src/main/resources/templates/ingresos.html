@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{fragments :: head('Control de ingresos')}"></head>
+  <body>
+    <aside th:replace="~{fragments :: sidebar('ingresos')}"></aside>
+    <main class="workspace">
+      <header class="topbar">
+        <span>Consultorio / <b>Control de ingresos</b></span>
+        <span class="status-dot">Importes en soles · PEN</span>
+      </header>
+      <div class="page-content ingresos-page">
+        <div class="page-heading">
+          <div>
+            <span class="eyebrow">LA ACTIVIDAD DE TU CONSULTORIO</span>
+            <h1>Control de ingresos</h1>
+            <p class="muted">Consulta los cobros de todos tus pacientes en un solo lugar.</p>
+          </div>
+          <div class="actions">
+            <button type="button" class="button secondary" id="ing-actualizar">↻ Actualizar</button>
+            <button type="button" class="button primary" id="ing-exportar" disabled>↓ Exportar Excel</button>
+          </div>
+        </div>
+
+        <section class="card ingresos-filtros" aria-labelledby="ing-filtros-titulo">
+          <div class="ingresos-filter-heading">
+            <h2 id="ing-filtros-titulo">Elige el período</h2>
+            <span class="ingresos-badge">Según la fecha de cada pago</span>
+          </div>
+          <form id="ing-filtros">
+            <div class="ingresos-periodos" role="group" aria-label="Agrupación del período">
+              <button type="button" data-ing-tipo="MES" class="active" aria-pressed="true">Mensual</button>
+              <button type="button" data-ing-tipo="TRIMESTRE" aria-pressed="false">Trimestral</button>
+              <button type="button" data-ing-tipo="ANIO" aria-pressed="false">Anual</button>
+              <button type="button" data-ing-tipo="PERSONALIZADO" aria-pressed="false">Personalizado</button>
+            </div>
+            <div class="ingresos-filter-fields">
+              <label id="ing-anio-campo">Año
+                <input type="number" id="ing-anio" min="1900" max="2100" required />
+              </label>
+              <label id="ing-mes-campo">Mes
+                <select id="ing-mes">
+                  <option value="1">Enero</option><option value="2">Febrero</option>
+                  <option value="3">Marzo</option><option value="4">Abril</option>
+                  <option value="5">Mayo</option><option value="6">Junio</option>
+                  <option value="7">Julio</option><option value="8">Agosto</option>
+                  <option value="9">Septiembre</option><option value="10">Octubre</option>
+                  <option value="11">Noviembre</option><option value="12">Diciembre</option>
+                </select>
+              </label>
+              <label id="ing-trimestre-campo" hidden>Trimestre
+                <select id="ing-trimestre">
+                  <option value="1">1 · Enero – marzo</option><option value="2">2 · Abril – junio</option>
+                  <option value="3">3 · Julio – septiembre</option><option value="4">4 · Octubre – diciembre</option>
+                </select>
+              </label>
+              <label id="ing-desde-campo" hidden>Desde
+                <input id="ing-desde" type="text" inputmode="numeric" placeholder="dd/mm/aaaa" maxlength="10" />
+              </label>
+              <label id="ing-hasta-campo" hidden>Hasta
+                <input id="ing-hasta" type="text" inputmode="numeric" placeholder="dd/mm/aaaa" maxlength="10" />
+              </label>
+              <label class="ingresos-search">Paciente, DNI o historia
+                <input id="ing-busqueda" type="search" placeholder="Todos los pacientes" maxlength="120" />
+              </label>
+              <button type="submit" class="button primary" id="ing-consultar">Ver ingresos →</button>
+            </div>
+          </form>
+        </section>
+        <p id="ing-mensaje" class="ingresos-mensaje" role="status" aria-live="polite" hidden></p>
+        <div class="ingresos-period-title">
+          <div><h2 id="ing-periodo-titulo">Preparando el resumen…</h2><p id="ing-periodo-fechas"></p></div>
+          <span id="ing-actualizado"></span>
+        </div>
+
+        <div id="ing-resultados" aria-busy="true">
+          <section class="ingresos-kpis" aria-label="Resumen del período">
+            <article class="card ingresos-kpi ingresos-kpi-principal">
+              <div class="ingresos-kpi-label"><span>Total cobrado</span><span aria-hidden="true">↗</span></div>
+              <strong id="ing-total">—</strong>
+              <p id="ing-comparacion">Pagos guardados en el período elegido</p>
+            </article>
+            <article class="card ingresos-kpi">
+              <div class="ingresos-kpi-label"><span>Pagos recibidos</span><span aria-hidden="true">▤</span></div>
+              <strong id="ing-pagos">—</strong><p id="ing-comprobantes">Control de capturas adjuntas</p>
+            </article>
+            <article class="card ingresos-kpi">
+              <div class="ingresos-kpi-label"><span>Pacientes con pagos</span><span aria-hidden="true">◎</span></div>
+              <strong id="ing-pacientes">—</strong><p>Pacientes distintos en este período</p>
+            </article>
+            <article class="card ingresos-kpi">
+              <div class="ingresos-kpi-label"><span>Promedio por pago</span><span aria-hidden="true">∑</span></div>
+              <strong id="ing-promedio">—</strong><p>Total cobrado / cantidad de pagos</p>
+            </article>
+          </section>
+
+          <div class="ingresos-analysis">
+            <section class="card ingresos-chart-card" aria-labelledby="ing-grafica-titulo">
+              <div class="ingresos-chart-heading">
+                <div><h2 id="ing-grafica-titulo">Evolución de ingresos</h2><p id="ing-grafica-subtitulo">Cobros dentro del período</p></div>
+                <span class="ingresos-chart-key"><i></i> Cobrado</span>
+              </div>
+              <p id="ing-grafica-lectura" class="ingresos-chart-lectura" aria-live="polite">Carga una consulta para ver los importes.</p>
+              <div class="ingresos-chart-scroll"><div id="ing-grafica" class="ingresos-chart" aria-label="Importes por fecha"></div></div>
+              <p class="ingresos-small-note">Pasa el cursor o selecciona una barra para consultar su importe.</p>
+            </section>
+            <section class="card ingresos-comparativo" aria-labelledby="ing-comparativo-titulo">
+              <span class="eyebrow">UNA MIRADA AL PERÍODO ANTERIOR</span>
+              <h2 id="ing-comparativo-titulo">Comparación de cobros</h2>
+              <div class="ingresos-comparison-row"><span>Período seleccionado</span><b id="ing-comp-actual">—</b></div>
+              <p id="ing-comp-fecha-actual"></p>
+              <div class="ingresos-comparison-row"><span>Período anterior</span><b id="ing-comp-anterior">—</b></div>
+              <p id="ing-comp-fecha-anterior"></p>
+              <div class="ingresos-diferencia"><span>Diferencia</span><strong id="ing-diferencia">—</strong></div>
+              <p id="ing-variacion" class="ingresos-variacion"></p>
+              <p class="ingresos-small-note">Se comparan períodos completos y se aplica la misma búsqueda a ambos.</p>
+            </section>
+          </div>
+
+          <section class="card ingresos-detalle" aria-labelledby="ing-detalle-titulo">
+            <div class="ingresos-detail-heading">
+              <div><h2 id="ing-detalle-titulo">Detalle de pagos</h2><p id="ing-detalle-subtitulo">Cobros de las historias clínicas</p></div>
+              <a class="button secondary small" href="/">＋ Registrar desde una historia</a>
+            </div>
+            <div class="ingresos-table-scroll">
+              <table class="ingresos-table">
+                <caption class="ingresos-sr-only">Pagos registrados dentro del período y la búsqueda seleccionados.</caption>
+                <thead><tr><th scope="col">Fecha de pago</th><th scope="col">Paciente</th>
+                  <th scope="col">Historia</th><th scope="col" class="ingresos-money">Importe</th>
+                  <th scope="col">Comprobante</th><th scope="col">Gestionar</th></tr></thead>
+                <tbody id="ing-filas"><tr><td colspan="6">Cargando pagos…</td></tr></tbody>
+              </table>
+            </div>
+            <div class="ingresos-paginacion">
+              <span id="ing-pagina-info"></span>
+              <div><button type="button" id="ing-anterior" class="button secondary small" disabled>← Anterior</button>
+                <button type="button" id="ing-siguiente" class="button secondary small" disabled>Siguiente →</button></div>
+            </div>
+          </section>
+          <p class="ingresos-base">Base del cálculo: fecha e importe de cada pago guardado. Los cambios en una historia se reflejan al actualizar este panel.</p>
+        </div>
+      </div>
+    </main>
+    <script type="module" src="/js/ingresos.js"></script>
+  </body>
+</html>

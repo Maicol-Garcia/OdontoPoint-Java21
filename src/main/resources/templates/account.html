@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{fragments :: head('Mi cuenta')}"></head>
+  <body>
+    <aside th:replace="~{fragments :: sidebar('account')}"></aside>
+    <main class="workspace">
+      <header class="topbar">Configuración / Mi cuenta</header>
+      <div class="page-content narrow">
+        <div class="page-heading">
+          <div>
+            <span class="eyebrow">ACCESO AL CONSULTORIO</span>
+            <h1>Mi cuenta</h1>
+            <p class="muted">Actualiza tu contraseña de acceso.</p>
+          </div>
+        </div>
+        <section class="card editor-panel">
+          <div
+            class="alert error"
+            th:if="${message}"
+            th:text="${message}"
+          ></div>
+          <div
+            class="alert success"
+            th:if="${success}"
+            th:text="${success}"
+          ></div>
+          <form
+            th:action="@{/account/password}"
+            method="post"
+            class="auth-form"
+          >
+            <label
+              >Contraseña actual<input
+                type="password"
+                name="currentPassword"
+                autocomplete="current-password"
+                required /></label
+            ><label
+              >Nueva contraseña<input
+                type="password"
+                name="newPassword"
+                autocomplete="new-password"
+                required
+                minlength="10"
+                maxlength="72" /></label
+            ><label
+              >Confirmar nueva contraseña<input
+                type="password"
+                name="confirmPassword"
+                autocomplete="new-password"
+                required
+                minlength="10"
+                maxlength="72" /></label
+            ><button class="button primary">Actualizar contraseña</button>
+          </form>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

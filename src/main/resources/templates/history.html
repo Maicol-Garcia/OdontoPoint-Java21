@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{fragments :: head('Historia clínica')}"></head>
+  <body th:attr="data-history-id=${historyId}">
+    <aside th:replace="~{fragments :: sidebar('new')}"></aside>
+    <main class="workspace">
+      <header class="topbar">
+        <a href="/">← Pacientes</a
+        ><span class="status-dot">Historia clínica odontológica</span>
+      </header>
+      <div class="page-content">
+        <div class="page-heading">
+          <div>
+            <span class="eyebrow" id="history-number">NUEVA HISTORIA</span>
+            <h1 id="patient-title">Registro del paciente</h1>
+            <p class="muted" id="history-date">
+              Número y fecha automáticos al guardar por primera vez.
+            </p>
+          </div>
+          <div class="actions">
+            <a id="export-pdf" href="#" class="button secondary">↓ PDF</a
+            ><a id="export-excel" href="#" class="button secondary">↓ Excel</a
+            ><button
+              form="history-form"
+              class="button primary"
+              id="save-history"
+            >
+              Guardar historia
+            </button>
+          </div>
+        </div>
+        <div class="tab-nav" role="tablist">
+          <button
+            type="button"
+            role="tab"
+            aria-selected="true"
+            class="tab active"
+            data-panel="anamnesis"
+          >
+            <span>01</span>Anamnesis</button
+          ><button
+            type="button"
+            role="tab"
+            aria-selected="false"
+            class="tab"
+            data-panel="clinical"
+          >
+            <span>02</span>Enfermedad y antecedentes</button
+          ><button
+            type="button"
+            role="tab"
+            aria-selected="false"
+            class="tab"
+            data-panel="dental"
+          >
+            <span>03</span>Odontograma</button
+          ><button
+            type="button"
+            role="tab"
+            aria-selected="false"
+            class="tab"
+            data-panel="finance"
+          >
+            <span>04</span>Tratamiento y pagos</button
+          ><button
+            type="button"
+            role="tab"
+            aria-selected="false"
+            class="tab"
+            data-panel="documents"
+          >
+            <span>05</span>Consentimiento y archivos
+          </button>
+        </div>
+        <form id="history-form">
+          <section class="card editor-panel" data-section="anamnesis">
+            <div class="section-heading">
+              <span class="section-icon">01</span>
+              <div>
+                <h2>Anamnesis</h2>
+                <p>Identificación del paciente y motivo de consulta.</p>
+              </div>
+              <span class="muted required-note">* Campos obligatorios</span>
+            </div>
+            <div class="form-grid">
+              <label class="field wide" for="fullName"
+                >Nombre completo <span class="required">*</span
+                ><input
+                  type="text"
+                  name="fullName"
+                  id="fullName"
+                  class="form-field"
+                  required
+                  maxlength="180" /></label
+              ><label class="field" for="dni"
+                >DNI <span class="required">*</span
+                ><input
+                  type="text"
+                  name="dni"
+                  id="dni"
+                  class="form-field"
+                  required
+                  maxlength="8" /></label
+              ><label class="field" for="sex"
+                >Sexo <span class="required">*</span
+                ><select name="sex" id="sex" class="form-field" required>
+                  <option value="">Seleccionar</option>
+                  <option value="Femenino">Femenino</option>
+                  <option value="Masculino">Masculino</option>
+                  <option value="Otro / no especificado">
+                    Otro / no especificado
+                  </option>
+                </select></label
+              ><label class="field" for="birthDate"
+                >Fecha de nacimiento <span class="required">*</span
+                ><input
+                  type="text"
+                  name="birthDate"
+                  id="birthDate"
+                  class="form-field"
+                  required
+                  placeholder="dd/mm/aaaa"
+                  inputmode="numeric"
+                  maxlength="10" /></label
+              ><label class="field"
+                >Edad<input
+                  id="age"
+                  readonly
+                  placeholder="Se calcula al ingresar el nacimiento" /></label
+              ><label class="field wide" for="address"
+                >Domicilio<input
+                  type="text"
+                  name="address"
+                  id="address"
+                  class="form-field"
+                  maxlength="180" /></label
+              ><label class="field" for="origin"
+                >Lugar de procedencia<input
+                  type="text"
+                  name="origin"
+                  id="origin"
+                  class="form-field"
+                  maxlength="180" /></label
+              ><label class="field" for="occupation"
+                >Ocupación<input
+                  type="text"
+                  name="occupation"
+                  id="occupation"
+                  class="form-field"
+                  maxlength="180" /></label
+              ><label class="field" for="maritalStatus"
+                >Estado civil<select
+                  name="maritalStatus"
+                  id="maritalStatus"
+                  class="form-field"
+                >
+                  <option value="No informado">No informado</option>
+                  <option value="Soltero/a">Soltero/a</option>
+                  <option value="Casado/a">Casado/a</option>
+                  <option value="Conviviente">Conviviente</option>
+                  <option value="Divorciado/a">Divorciado/a</option>
+                  <option value="Viudo/a">Viudo/a</option>
+                </select></label
+              ><label class="field" for="phone"
+                >Teléfono<input
+                  type="text"
+                  name="phone"
+                  id="phone"
+                  class="form-field"
+                  maxlength="180"
+              /></label>
+            </div>
+            <div class="subheading">
+              <h3>Representante o apoderado</h3>
+              <p id="guardian-note">
+                Completa estos datos si el paciente es menor de 18 años.
+              </p>
+            </div>
+            <div class="form-grid">
+              <label class="field wide" for="guardianName"
+                >Nombre del apoderado<input
+                  type="text"
+                  name="guardianName"
+                  id="guardianName"
+                  class="form-field"
+                  maxlength="180" /></label
+              ><label class="field" for="guardianDni"
+                >DNI del apoderado<input
+                  type="text"
+                  name="guardianDni"
+                  id="guardianDni"
+                  class="form-field"
+                  maxlength="8" /></label
+              ><label class="field" for="guardianPhone"
+                >Teléfono del apoderado<input
+                  type="text"
+                  name="guardianPhone"
+                  id="guardianPhone"
+                  class="form-field"
+                  maxlength="180" /></label
+              ><label class="field wide" for="reason"
+                >Motivo de consulta <span class="required">*</span
+                ><textarea
+                  name="reason"
+                  id="reason"
+                  class="form-field"
+                  required
+                  rows="3"
+                  maxlength="10000"
+                ></textarea>
+              </label>
+            </div>
+          </section>
+          <section class="card editor-panel" data-section="clinical" hidden>
+            <div class="section-heading">
+              <span class="section-icon">02</span>
+              <div>
+                <h2>Enfermedad actual y antecedentes</h2>
+                <p>Información clínica para acompañar cada decisión.</p>
+              </div>
+            </div>
+            <div class="form-grid">
+              <label class="field wide" for="symptoms"
+                >Signos y síntomas principales<textarea
+                  name="symptoms"
+                  id="symptoms"
+                  class="form-field"
+                  rows="3"
+                  maxlength="10000"
+                ></textarea></label
+              ><label class="field wide" for="illnessDuration"
+                >Tiempo de enfermedad<input
+                  type="text"
+                  name="illnessDuration"
+                  id="illnessDuration"
+                  class="form-field"
+                  maxlength="180"
+              /></label>
+            </div>
+            <div class="subheading">
+              <h3>Antecedentes personales patológicos</h3>
+              <p>Selecciona Sí, No o No informado para cada antecedente.</p>
+            </div>
+            <div class="conditions-grid">
+              <label class="condition"
+                ><span>Alergia</span
+                ><select data-condition="Alergia">
+                  <option>No informado</option>
+                  <option>Sí</option>
+                  <option>No</option>
+                </select></label
+              ><label class="condition"
+                ><span>Fiebre reumática</span
+                ><select data-condition="Fiebre reumática">
+                  <option>No informado</option>
+                  <option>Sí</option>
+                  <option>No</option>
+                </select></label
+              ><label class="condition"
+                ><span>Anemia</span
+                ><select data-condition="Anemia">
+                  <option>No informado</option>
+                  <option>Sí</option>
+                  <option>No</option>
+                </select></label
+              ><label class="condition"
+                ><span>Diabetes</span
+                ><select data-condition="Diabetes">
+                  <option>No informado</option>
+                  <option>Sí</option>
+                  <option>No</option>
+                </select></label
+              ><label class="condition"
+                ><span>Tuberculosis</span
+                ><select data-condition="Tuberculosis">
+                  <option>No informado</option>
+                  <option>Sí</option>
+                  <option>No</option>
+                </select></label
+              ><label class="condition"
+                ><span>Hepatitis infecciosa</span
+                ><select data-condition="Hepatitis infecciosa">
+                  <option>No informado</option>
+                  <option>Sí</option>
+                  <option>No</option>
+                </select></label
+              ><label class="condition"
+                ><span>Infección venérea</span
+                ><select data-condition="Infección venérea">
+                  <option>No informado</option>
+                  <option>Sí</option>
+                  <option>No</option>
+                </select></label
+              ><label class="condition"
+                ><span>Enfermedad cardíaca</span
+                ><select data-condition="Enfermedad cardíaca">
+                  <option>No informado</option>
+                  <option>Sí</option>
+                  <option>No</option>
+                </select></label
+              ><label class="condition"
+                ><span>Gastritis</span
+                ><select data-condition="Gastritis">
+                  <option>No informado</option>
+                  <option>Sí</option>
+                  <option>No</option>
+                </select></label
+              >
+            </div>
+            <div class="form-grid">
+              <label class="field wide" for="allergyDetails"
+                >Alergia: ¿a qué?<textarea
+                  name="allergyDetails"
+                  id="allergyDetails"
+                  class="form-field"
+                  rows="3"
+                  maxlength="10000"
+                ></textarea></label
+              ><label class="field wide" for="otherHistory"
+                >Otros antecedentes<textarea
+                  name="otherHistory"
+                  id="otherHistory"
+                  class="form-field"
+                  rows="3"
+                  maxlength="10000"
+                ></textarea></label
+              ><label class="field wide" for="clinicalExam"
+                >Examen clínico<textarea
+                  name="clinicalExam"
+                  id="clinicalExam"
+                  class="form-field"
+                  rows="3"
+                  maxlength="10000"
+                ></textarea></label
+              ><label class="field wide" for="diagnosis"
+                >Diagnóstico<textarea
+                  name="diagnosis"
+                  id="diagnosis"
+                  class="form-field"
+                  rows="3"
+                  maxlength="10000"
+                ></textarea>
+              </label>
+            </div>
+          </section>
+          <section class="card editor-panel" data-section="dental" hidden>
+            <div class="section-heading">
+              <span class="section-icon">03</span>
+              <div>
+                <h2>Odontograma interactivo</h2>
+                <p>Dentición permanente y temporal · Numeración FDI</p>
+              </div>
+              <span class="pill" id="marks-count">0 superficies marcadas</span>
+            </div>
+            <div class="dental-toolbar">
+              <div class="palette">
+                <button
+                  type="button"
+                  class="color-tool active"
+                  data-color="NEGRO"
+                >
+                  <i class="swatch black"></i>Negro</button
+                ><button type="button" class="color-tool" data-color="AMARILLO">
+                  <i class="swatch yellow"></i>Amarillo</button
+                ><button type="button" class="color-tool" data-color="VERDE">
+                  <i class="swatch green"></i>Verde</button
+                ><button type="button" class="color-tool" data-color="BORRAR">
+                  Borrar
+                </button>
+              </div>
+              <label class="check"
+                ><input type="checkbox" id="whole-tooth" /> Diente
+                completo</label
+              ><button
+                type="button"
+                class="button small secondary"
+                id="undo-tooth"
+              >
+                ↶ Deshacer
+              </button>
+            </div>
+            <div class="dental-view-bar">
+              <div class="dental-view-tabs" role="group" aria-label="Vista del odontograma">
+                <button type="button" id="dental-view-3d" class="active" aria-pressed="true">Dentadura 3D</button>
+                <button type="button" id="dental-view-2d" aria-pressed="false">Odontograma 2D</button>
+              </div>
+              <span class="dental-save-hint">Las dos vistas comparten las mismas marcas.</span>
+            </div>
+            <div id="dental-3d" class="dental-3d">
+              <div class="dental-scene-column">
+                <div class="dental-scene-toolbar">
+                  <label>Dentición
+                    <select id="dental-dentition">
+                      <option value="permanent">Permanente · 32 dientes</option>
+                      <option value="primary">Temporal · 20 dientes</option>
+                    </select>
+                  </label>
+                  <label>Mostrar
+                    <select id="dental-jaws">
+                      <option value="both">Ambas arcadas</option>
+                      <option value="upper">Solo superior</option>
+                      <option value="lower">Solo inferior</option>
+                    </select>
+                  </label>
+                  <label class="dental-label-toggle"><input id="dental-labels" type="checkbox" checked /> Números FDI</label>
+                </div>
+                <div id="dental-canvas-host" class="dental-canvas-host" role="region" aria-label="Dentadura tridimensional interactiva">
+                  <p id="dental-loading" class="dental-loading">Preparando la dentadura 3D… Si no se muestra, utiliza la vista 2D.</p>
+                  <div class="dental-orientation"><span>Derecha del paciente</span><span>Izquierda del paciente</span></div>
+                  <div id="dental-label-layer" class="dental-label-layer" aria-hidden="true"></div>
+                  <div class="dental-camera-presets" role="group" aria-label="Orientación de la cámara">
+                    <button type="button" data-dental-camera="front" class="active">Frente</button>
+                    <button type="button" data-dental-camera="right">Derecha</button>
+                    <button type="button" data-dental-camera="left">Izquierda</button>
+                    <button type="button" data-dental-camera="occlusal">Oclusal</button>
+                    <button type="button" id="dental-reset">↺ Restablecer</button>
+                  </div>
+                </div>
+                <div class="dental-motion-bar">
+                  <label for="dental-opening">Apertura de la boca</label>
+                  <input type="range" id="dental-opening" min="0" max="40" value="20" step="1" />
+                  <output id="dental-opening-value" for="dental-opening">20°</output>
+                  <button type="button" id="dental-spin" aria-pressed="false">Giro automático</button>
+                  <button type="button" id="dental-fullscreen">Ampliar</button>
+                </div>
+                <p class="dental-instructions">Arrastra para girar · Rueda para acercar · Botón derecho para desplazar · En pantalla táctil: uno o dos dedos.</p>
+              </div>
+              <aside class="dental-inspector">
+                <span class="dental-eyebrow">REGISTRO POR SUPERFICIE</span>
+                <h3 id="dental-selected-title">Selecciona un diente</h3>
+                <p id="dental-selected-name">Haz clic en la dentadura o elige su número.</p>
+                <label for="dental-tooth-select">Pieza dental · FDI</label>
+                <select id="dental-tooth-select"><option value="">Seleccionar pieza…</option></select>
+                <label for="dental-surface-select">Superficie que deseas registrar</label>
+                <select id="dental-surface-select">
+                  <option value="V">V · Vestibular</option>
+                  <option value="L">L · Lingual / palatina</option>
+                  <option value="M">M · Mesial</option>
+                  <option value="D">D · Distal</option>
+                  <option value="O">O · Oclusal / incisal</option>
+                </select>
+                <div id="dental-surface-status" class="dental-surface-status" aria-live="polite"></div>
+                <p id="dental-active-tool" class="dental-active-tool">Color activo: Negro</p>
+                <button type="button" id="dental-apply" class="button primary" disabled>Aplicar marca</button>
+                <p class="dental-register-note">Para marcar las cinco caras a la vez, activa «Diente completo». Guarda la historia para conservar los cambios.</p>
+                <div class="dental-model-note">Modelo 3D ilustrativo de referencia. No representa un escaneo ni la anatomía particular del paciente.</div>
+              </aside>
+            </div>
+            <p id="dental-3d-error" class="dental-3d-error" role="status" hidden></p>
+            <div id="odontogram" class="odontogram" hidden></div>
+            <div class="surface-legend">
+              V: vestibular · L: lingual/palatina · M: mesial · D: distal · O:
+              oclusal/incisal
+            </div>
+            <div class="subheading">
+              <h3>Leyenda del consultorio</h3>
+              <p>Puedes ajustar el significado de los colores.</p>
+            </div>
+            <div class="form-grid three">
+              <label class="field" for="blackLegend"
+                >Negro<input
+                  type="text"
+                  name="blackLegend"
+                  id="blackLegend"
+                  class="form-field"
+                  maxlength="180" /></label
+              ><label class="field" for="yellowLegend"
+                >Amarillo<input
+                  type="text"
+                  name="yellowLegend"
+                  id="yellowLegend"
+                  class="form-field"
+                  maxlength="180" /></label
+              ><label class="field" for="greenLegend"
+                >Verde<input
+                  type="text"
+                  name="greenLegend"
+                  id="greenLegend"
+                  class="form-field"
+                  maxlength="180"
+              /></label>
+            </div>
+            <div class="form-grid">
+              <label class="field wide" for="toothNotes"
+                >Observaciones del odontograma<textarea
+                  name="toothNotes"
+                  id="toothNotes"
+                  class="form-field"
+                  rows="3"
+                  maxlength="10000"
+                ></textarea>
+              </label>
+            </div>
+          </section>
+          <section class="card editor-panel" data-section="finance" hidden>
+            <div class="section-heading">
+              <span class="section-icon">04</span>
+              <div>
+                <h2>Tratamiento y presupuesto</h2>
+                <p>Control de importes en soles y pagos del paciente.</p>
+              </div>
+              <button class="button secondary" type="button" id="add-treatment">
+                ＋ Agregar tratamiento
+              </button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Tratamiento</th>
+                    <th>Importe</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="treatment-rows"></tbody>
+              </table>
+            </div>
+            <div class="money-summary">
+              <div><span>Presupuesto total</span><b id="total">S/ 0.00</b></div>
+              <div><span>Pagado</span><b id="paid">S/ 0.00</b></div>
+              <div class="balance">
+                <span>Saldo pendiente</span><b id="balance">S/ 0.00</b>
+              </div>
+            </div>
+            <div class="section-heading compact">
+              <div>
+                <h2>Pagos realizados</h2>
+                <p>Fecha, comprobante y firmante de cada pago.</p>
+              </div>
+              <button class="button secondary" type="button" id="add-payment">
+                ＋ Registrar pago
+              </button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Fecha</th>
+                    <th>Pago</th>
+                    <th>Acta / comprobante</th>
+                    <th>Firmante</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="payment-rows"></tbody>
+              </table>
+            </div>
+
+            <div class="subheading">
+              <h3>Evidencias clínicas</h3>
+              <p>Adjunta fotos del antes/después, fotografías de tratamientos realizados u otras evidencias clínicas. Los comprobantes de pago se adjuntan directamente al registrar cada pago.</p>
+            </div>
+            <div class="upload-box evidence-upload">
+              <label>Tipo de evidencia
+                <select id="evidence-type" form="evidence-upload-form">
+                  <option value="TRATAMIENTO">Foto de tratamiento</option>
+                  <option value="OTRO">Otra evidencia clínica</option>
+                </select>
+              </label>
+              <label>Título
+                <input id="evidence-title" form="evidence-upload-form" maxlength="180" placeholder="Ej.: Restauración pieza 16 - después" />
+              </label>
+              <label class="wide">Descripción
+                <input id="evidence-description" form="evidence-upload-form" maxlength="500" placeholder="Detalle opcional de la evidencia" />
+              </label>
+              <label class="file-label">Seleccionar imagen
+                <input id="evidence-file" form="evidence-upload-form" type="file" accept=".png,.jpg,.jpeg,.jfif,image/png,image/jpeg" />
+              </label>
+              <button type="submit" form="evidence-upload-form" class="button primary" id="upload-evidence">Adjuntar evidencia</button>
+            </div>
+            <div class="evidence-filters" role="group" aria-label="Filtrar evidencias">
+              <button type="button" class="button small secondary evidence-filter active" data-evidence-filter="">Todas</button>
+              <button type="button" class="button small secondary evidence-filter" data-evidence-filter="TRATAMIENTO">Tratamientos</button>
+              <button type="button" class="button small secondary evidence-filter" data-evidence-filter="OTRO">Otros</button>
+            </div>
+            <div id="evidence-list" class="document-grid"></div>
+          </section>
+          <section class="card editor-panel" data-section="documents" hidden>
+            <div class="section-heading">
+              <span class="section-icon">05</span>
+              <div>
+                <h2>Consentimiento y documentos firmados</h2>
+                <p>
+                  Registra la autorización y conserva la imagen del documento
+                  firmado.
+                </p>
+              </div>
+            </div>
+            <div class="form-grid">
+              <label class="field" for="consentStatus"
+                >Estado del consentimiento<select
+                  name="consentStatus"
+                  id="consentStatus"
+                  class="form-field"
+                >
+                  <option value="Pendiente">Pendiente</option>
+                  <option value="Otorgado">Otorgado</option>
+                  <option value="Revocado">Revocado</option>
+                </select></label
+              ><label class="field" for="consentDate"
+                >Fecha del consentimiento<input
+                  type="text"
+                  name="consentDate"
+                  id="consentDate"
+                  class="form-field"
+                  placeholder="dd/mm/aaaa"
+                  inputmode="numeric"
+                  maxlength="10" /></label
+              ><label class="field wide" for="professional"
+                >Profesional tratante<input
+                  type="text"
+                  name="professional"
+                  id="professional"
+                  class="form-field"
+                  maxlength="180" /></label
+              ><label class="field wide" for="consentDetails"
+                >Procedimiento, riesgos, beneficios y alternativas<textarea
+                  name="consentDetails"
+                  id="consentDetails"
+                  class="form-field"
+                  rows="3"
+                  maxlength="10000"
+                ></textarea></label
+              ><label class="field wide" for="revocation"
+                >Revocatoria: detalle y fecha<textarea
+                  name="revocation"
+                  id="revocation"
+                  class="form-field"
+                  rows="3"
+                  maxlength="10000"
+                ></textarea>
+              </label>
+            </div>
+            <div class="subheading">
+              <h3>Documento firmado</h3>
+              <p>
+                Sube una foto o escaneo en JPG o PNG, de hasta 5 MB. Guarda
+                primero la historia y sus cambios.
+              </p>
+            </div>
+            <div class="upload-box">
+              <label class="file-label"
+                >Seleccionar imagen<input
+                  id="signed-file"
+                  type="file"
+                  accept=".png,.jpg,.jpeg,.jfif,image/png,image/jpeg" /></label
+              ><label
+                >Descripción<input
+                  id="document-description"
+                  maxlength="250"
+                  placeholder="Ej.: consentimiento firmado por el paciente" /></label
+              ><button
+                type="button"
+                class="button primary"
+                id="upload-document"
+              >
+                Adjuntar documento
+              </button>
+            </div>
+            <div id="document-list" class="document-grid"></div>
+            <div class="subheading">
+              <h3>Actividad de la historia</h3>
+              <p>Últimas modificaciones y usuario responsable.</p>
+            </div>
+            <ul id="audit-list" class="audit-list"></ul>
+          </section>
+        </form>
+        <form id="evidence-upload-form" hidden></form>
+        <p class="footer-note">
+          Las marcas y los cambios del formulario se conservan al pulsar Guardar
+          historia.
+        </p>
+      </div>
+    </main>
+    <dialog id="treatment-dialog">
+      <form id="treatment-form">
+        <h2>Tratamiento</h2>
+        <label
+          >Descripción<input
+            name="description"
+            required
+            maxlength="1000" /></label
+        ><label
+          >Importe (S/)<input
+            name="amount"
+            type="number"
+            min="0"
+            max="999999999"
+            step="0.01"
+            required
+        /></label>
+        <div class="actions">
+          <button type="button" class="button secondary" data-close>
+            Cancelar</button
+          ><button class="button primary">Agregar</button>
+        </div>
+      </form>
+    </dialog>
+    <dialog id="payment-dialog">
+      <form id="payment-form">
+        <h2>Registrar pago</h2>
+        <label
+          >Fecha<input
+            name="date"
+            placeholder="dd/mm/aaaa"
+            required
+            maxlength="10" /></label
+        ><label
+          >Importe (S/)<input
+            name="amount"
+            type="number"
+            min="0.01"
+            max="999999999"
+            step="0.01"
+            required /></label
+        ><label class="file-label"
+          >Acta / comprobante (captura)
+          <input name="receiptFile" type="file" accept=".png,.jpg,.jpeg,.jfif,image/png,image/jpeg" />
+          <small>PNG o JPG, máximo 5 MB. La captura quedará vinculada a este pago.</small>
+        </label
+        ><label
+          >Firmante registrado<input name="signer" maxlength="180"
+        /></label>
+        <div class="actions">
+          <button type="button" class="button secondary" data-close>
+            Cancelar</button
+          ><button class="button primary">Registrar</button>
+        </div>
+      </form>
+    </dialog>
+    <div th:replace="~{fragments :: toast}"></div>
+    <script src="/js/history.js" defer></script>
+    <script type="module" src="/js/odontogram-3d.js"></script>
+  </body>
+</html>

@@ -1,0 +1,1 @@
+Esta versión usa Java 21 y no depende de Lombok. Los constructores, getters y setters son explícitos. Consulte README.md para configurar Java 21 en VS Code. No active funciones preview.

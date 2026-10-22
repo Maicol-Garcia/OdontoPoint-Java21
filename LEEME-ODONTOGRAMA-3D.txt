@@ -1,0 +1,14 @@
+ODONTOPOINT — DENTADURA 3D
+
+1. Extrae todo el ZIP y abre OdontoPoint-Web en VS Code.
+2. Usa Java 21. El JAR compilado está en bin/odontopoint-web.jar.
+3. Ejecuta Iniciar-Windows.bat con tu MySQL configurado.
+   O para una prueba H2: java -jar bin/odontopoint-web.jar --spring.profiles.active=h2
+4. Abre http://localhost:8080 y entra en una historia > Odontograma.
+5. Elige Dentadura 3D. Arrastra para girar y usa la rueda para acercar.
+6. Selecciona pieza, superficie y color; pulsa Aplicar marca y Guarda la historia.
+
+No se cambian las tablas. Las marcas 3D y 2D son las mismas.
+No necesitas Node.js ni npm. El modelo ilustrativo no representa un escaneo del paciente.
+El PDF conserva el odontograma 2D.
+Guía completa: docs/ODONTOGRAMA-3D.md

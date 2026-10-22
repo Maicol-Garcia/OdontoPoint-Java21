@@ -1,0 +1,14 @@
+ODONTOPOINT — CONTROL DE INGRESOS
+
+1. Extrae todo el ZIP y abre la carpeta OdontoPoint-Web en VS Code.
+2. Usa Java 21. El JAR actualizado está en bin/odontopoint-web.jar.
+3. Ejecuta Iniciar-Windows.bat e introduce tus credenciales de MySQL.
+4. Abre http://localhost:8080 y elige Control de ingresos.
+5. Selecciona mes, trimestre, año o rango y pulsa Ver ingresos.
+6. Puedes buscar pacientes, ver comprobantes y descargar todos los pagos del filtro en Excel.
+
+Se usan los pagos ya guardados, según su fecha de pago. No se duplican ingresos.
+El esquema de tablas se conserva. El índice de fecha/historia se declara en la entidad
+y también puede aplicarse manualmente mediante sql/06-indice-ingresos.sql.
+Mantén tus credenciales y variables de conexión de MySQL al utilizar esta entrega.
+La guía completa está en docs/CONTROL-DE-INGRESOS.md.

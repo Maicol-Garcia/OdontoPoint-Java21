@@ -1,0 +1,17 @@
+ODONTOPOINT - CORRECCIÓN DE EVIDENCIAS CLÍNICAS
+
+1. Abra MySQL Workbench.
+2. Abra y ejecute sql/04-corregir-evidencias.sql.
+3. En la carpeta OdontoPoint-Web ejecute:
+
+   mvn clean compile
+   mvn spring-boot:run
+
+Cambios incluidos:
+- Evidencias usan MEDIUMBLOB de forma explícita.
+- El formulario de evidencias queda separado del formulario principal de la historia.
+- Adjuntar evidencia ya no puede disparar accidentalmente Guardar historia.
+- Los errores de integridad ya no muestran siempre el mensaje incorrecto de DNI duplicado.
+- JFIF/JPG/JPEG/PNG continúan admitidos.
+
+Si la evidencia se sube correctamente, debe aparecer en Todas y Tratamientos/Otros según corresponda.

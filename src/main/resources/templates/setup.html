@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{fragments :: head('Configurar consultorio')}"></head>
+  <body class="auth-page">
+    <section class="auth-story">
+      <a class="brand" href="/"
+        ><span class="brand-icon"><img src="/images/tooth.svg" alt="" /></span
+        ><span
+          >Odonto<span class="brand-light">Point</span
+          ><small>GESTIÓN ODONTOLÓGICA</small></span
+        ></a
+      >
+      <div class="auth-copy">
+        <span class="eyebrow">CADA HISTORIA, BIEN CUIDADA</span>
+        <h1>Más cerca de tus<br />pacientes.</h1>
+        <p>
+          Tu información clínica organizada.<br />Más tiempo para lo que
+          importa.
+        </p>
+      </div>
+      <div class="tooth-art">
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+        <img src="/images/tooth.svg" alt="Ilustración de un diente" /><span
+          class="art-badge"
+          >✓ Historias en un solo lugar</span
+        >
+      </div>
+      <footer>OdontoPoint · Gestión clínica odontológica</footer>
+    </section>
+    <main class="auth-main">
+      <div class="auth-box">
+        <span class="pill">PRIMER INICIO</span>
+        <h2>Tu consultorio empieza aquí</h2>
+        <p class="muted">Crea la cuenta del administrador para comenzar.</p>
+        <div class="alert error" th:if="${message}" th:text="${message}"></div>
+        <form th:action="@{/setup}" method="post" class="auth-form">
+          <label
+            >Nombre del administrador<input
+              name="displayName"
+              required
+              maxlength="120"
+              autocomplete="name" /></label
+          ><label
+            >Usuario<input
+              name="username"
+              required
+              pattern="[a-zA-Z0-9._\-]{3,40}"
+              autocomplete="username"
+              placeholder="Por ejemplo: administrador" /></label
+          ><label
+            >Contraseña<input
+              name="password"
+              type="password"
+              required
+              minlength="10"
+              maxlength="72"
+              autocomplete="new-password"
+            /><small>Entre 10 y 72 caracteres.</small></label
+          ><label
+            >Confirmar contraseña<input
+              name="confirmPassword"
+              type="password"
+              required
+              minlength="10"
+              maxlength="72"
+              autocomplete="new-password" /></label
+          ><button class="button primary full">
+            Crear cuenta y continuar →
+          </button>
+        </form>
+      </div>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{fragments :: head('Catálogo de servicios')}"></head>
+  <body>
+    <aside th:replace="~{fragments :: sidebar('catalogo')}"></aside>
+    <main class="workspace">
+      <header class="topbar">
+        <span>Consultorio / <b>Catálogo de servicios</b></span
+        ><span class="status-dot">OdontoPoint</span>
+      </header>
+      <div class="page-content">
+        <div class="page-heading">
+          <div>
+            <span class="eyebrow">ATENCIÓN ODONTOLÓGICA</span>
+            <h1>Catálogo de servicios</h1>
+            <p class="muted">
+              Define precios y tiempos estimados para planificar tus citas.
+            </p>
+          </div>
+          <button id="nuevo" class="button primary">+ Nuevo servicio</button>
+        </div>
+        <div
+          id="mensaje"
+          class="agenda-message"
+          role="status"
+          aria-live="polite"
+          hidden
+        ></div>
+        <section class="card catalog-toolbar">
+          <label
+            >Buscar servicio<input
+              id="filtro"
+              placeholder="Nombre o descripción" /></label
+          ><label
+            >Mostrar<select id="estado-filtro">
+              <option value="todos">Todos los servicios</option>
+              <option value="activos">Activos</option>
+              <option value="inactivos">Inactivos</option>
+            </select></label
+          ><span id="cantidad" class="muted"></span>
+        </section>
+        <div id="servicios" class="catalog-grid"></div>
+        <dialog id="editor" class="agenda-dialog">
+          <form id="formulario">
+            <div class="dialog-heading">
+              <h2 id="titulo-editor">Nuevo servicio</h2>
+              <button
+                type="button"
+                class="button secondary"
+                id="cerrar"
+                aria-label="Cerrar"
+              >
+                ✕
+              </button>
+            </div>
+            <p
+              id="error-editor"
+              class="agenda-message error"
+              role="alert"
+              hidden
+            ></p>
+            <label
+              >Nombre del servicio<input
+                id="nombre"
+                maxlength="120"
+                required /></label
+            ><label
+              >Descripción<textarea
+                id="descripcion"
+                maxlength="1000"
+                rows="4"
+              ></textarea>
+            </label>
+            <div class="agenda-form-grid">
+              <label
+                >Precio referencial (S/)<input
+                  type="number"
+                  id="precio"
+                  min="0"
+                  max="9999999999.99"
+                  step="0.01"
+                  required /></label
+              ><label
+                >Duración (minutos)<input
+                  type="number"
+                  id="duracion"
+                  min="5"
+                  max="480"
+                  required
+              /></label>
+            </div>
+            <label
+              >Disponibilidad<select id="activo">
+                <option value="true">Activo</option>
+                <option value="false">Inactivo</option>
+              </select></label
+            >
+            <p class="muted">
+              Desactivar un servicio conserva las citas anteriores. El precio
+              del catálogo no genera cobros automáticos.
+            </p>
+            <div class="dialog-actions">
+              <button class="button primary" type="submit" id="guardar">
+                Guardar servicio
+              </button>
+            </div>
+          </form>
+        </dialog>
+      </div>
+    </main>
+    <script type="module" src="/js/catalogo.js"></script>
+  </body>
+</html>

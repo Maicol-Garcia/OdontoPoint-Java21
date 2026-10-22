@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{fragments :: head('Agenda de citas')}"></head>
+  <body>
+    <aside th:replace="~{fragments :: sidebar('agenda')}"></aside>
+    <main class="workspace">
+      <header class="topbar">
+        <span>Consultorio / <b>Agenda de citas</b></span
+        ><span class="status-dot">OdontoPoint</span>
+      </header>
+      <div class="page-content">
+        <div class="page-heading">
+          <div>
+            <span class="eyebrow">TIEMPO PARA CUIDAR SONRISAS</span>
+            <h1>Agenda de citas</h1>
+            <p class="muted">
+              Organiza las consultas y sigue la atención de cada paciente.
+            </p>
+          </div>
+          <button class="button primary" id="nueva">+ Nueva cita</button>
+        </div>
+        <div
+          id="mensaje"
+          class="agenda-message"
+          role="status"
+          aria-live="polite"
+          hidden
+        ></div>
+        <div class="agenda-layout">
+          <section class="card calendar-card" aria-label="Calendario mensual">
+            <div class="calendar-toolbar">
+              <div>
+                <span class="eyebrow">CALENDARIO · HORA DE LIMA</span>
+                <h2 id="mes"></h2>
+              </div>
+              <div class="calendar-controls">
+                <button
+                  class="button secondary"
+                  id="anterior"
+                  aria-label="Mes anterior"
+                >
+                  ←</button
+                ><button class="button secondary" id="hoy">Hoy</button
+                ><button
+                  class="button secondary"
+                  id="siguiente"
+                  aria-label="Mes siguiente"
+                >
+                  →
+                </button>
+              </div>
+            </div>
+            <div class="calendar-week" aria-hidden="true">
+              <span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span
+              ><span>Vie</span><span>Sáb</span><span>Dom</span>
+            </div>
+            <div id="calendario" class="calendar-grid"></div>
+            <div class="calendar-legend">
+              <span class="badge PROGRAMADA">Programada</span
+              ><span class="badge CONFIRMADA">Confirmada</span
+              ><span class="badge ATENDIDA">Atendida</span
+              ><span class="badge CANCELADA">Cancelada</span>
+            </div>
+          </section>
+          <section class="card day-panel">
+            <span class="eyebrow">AGENDA DEL DÍA</span>
+            <h2 id="dia"></h2>
+            <p id="resumen" class="muted"></p>
+            <div id="citas"></div>
+          </section>
+        </div>
+        <dialog id="editor" class="agenda-dialog">
+          <form id="formulario">
+            <div class="dialog-heading">
+              <div>
+                <span class="eyebrow">CONSULTORIO</span>
+                <h2 id="titulo-editor">Nueva cita</h2>
+              </div>
+              <button
+                type="button"
+                class="button secondary"
+                id="cerrar"
+                aria-label="Cerrar"
+              >
+                ✕
+              </button>
+            </div>
+            <p
+              id="error-editor"
+              class="agenda-message error"
+              role="alert"
+              hidden
+            ></p>
+            <label
+              >Buscar paciente por nombre, DNI o historia
+              <div class="patient-search">
+                <input
+                  id="busqueda"
+                  placeholder="Nombre o DNI"
+                  maxlength="180"
+                /><button type="button" class="button secondary" id="buscar">
+                  Buscar
+                </button>
+              </div></label
+            >
+            <label
+              >Paciente<select id="paciente" required>
+                <option value="">Selecciona un paciente</option>
+              </select></label
+            >
+            <p class="muted">
+              ¿Paciente nuevo?
+              <a href="/patients/new">Registra primero su historia clínica</a>.
+            </p>
+            <label
+              >Servicio del catálogo<select id="servicio">
+                <option value="">Consulta / sin servicio específico</option>
+              </select></label
+            >
+            <div class="agenda-form-grid">
+              <label>Fecha<input type="date" id="fecha" required /></label
+              ><label
+                >Estado<select id="estado">
+                  <option>PROGRAMADA</option>
+                  <option>CONFIRMADA</option>
+                  <option>ATENDIDA</option>
+                  <option>CANCELADA</option>
+                </select></label
+              ><label
+                >Hora de inicio<input type="time" id="inicio" required /></label
+              ><label>Hora de fin<input type="time" id="fin" required /></label>
+            </div>
+            <label
+              >Motivo de la cita<input
+                id="motivo"
+                maxlength="500"
+                required /></label
+            ><label>Profesional<input id="profesional" maxlength="180" /></label
+            ><label
+              >Notas<textarea id="notas" maxlength="1000" rows="3"></textarea>
+            </label>
+            <p class="muted">
+              Agenda de un consultorio. Las citas canceladas liberan el horario.
+            </p>
+            <div class="dialog-actions">
+              <button class="button primary" type="submit" id="guardar">
+                Guardar cita
+              </button>
+            </div>
+          </form>
+        </dialog>
+      </div>
+    </main>
+    <script type="module" src="/js/agenda.js"></script>
+  </body>
+</html>

@@ -1,0 +1,56 @@
+/* Odontograma 3D: encapsulado para conservar el diseño y los formularios existentes. */
+.dental-view-bar {display:flex;align-items:center;justify-content:space-between;gap:16px;margin:22px 0 16px;flex-wrap:wrap}
+.dental-view-tabs {display:inline-flex;background:#e9f0f2;border:1px solid #dce5e8;border-radius:12px;padding:4px;gap:4px}
+.dental-view-tabs button {border:0;border-radius:8px;background:transparent;color:#506771;padding:10px 18px;font:inherit;font-size:13px;cursor:pointer;font-weight:600}
+.dental-view-tabs button.active {background:#fff;color:#176970;box-shadow:0 2px 7px #25495512}
+.dental-save-hint {font-size:12px;color:#657b83}
+.dental-3d {display:grid;grid-template-columns:minmax(0,1fr) 255px;border:1px solid #dae5e9;border-radius:16px;overflow:hidden;background:#fff}
+.dental-3d[hidden],.odontogram[hidden],.dental-3d-error[hidden] {display:none}
+.dental-scene-column {min-width:0;background:#f3f6f8}
+.dental-scene-toolbar {padding:14px 18px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;border-bottom:1px solid #dfe8ec;background:#f9fbfc}
+.dental-scene-toolbar label {display:flex;gap:6px;align-items:center;color:#546d76;font-size:11px;font-weight:600}
+.dental-scene-toolbar select {border:1px solid #d9e3e7;border-radius:7px;background:#fff;font:inherit;color:#254752;padding:7px 6px;max-width:190px}
+.dental-label-toggle input {accent-color:#16727b}
+.dental-canvas-host {position:relative;height:490px;min-height:320px;overflow:hidden;background:radial-gradient(ellipse at 45% 35%,#fff,#eaf1f5 75%)}
+.dental-canvas-host canvas {display:block;width:100%;height:100%;touch-action:none;outline-offset:-4px}
+.dental-loading {position:absolute;inset:42% 8% auto;text-align:center;color:#506873;font-size:13px}
+.dental-orientation {position:absolute;top:16px;left:20px;right:20px;display:flex;justify-content:space-between;pointer-events:none;color:#728992;z-index:2;font-size:9px;text-transform:uppercase;letter-spacing:.08em}
+.dental-camera-presets {position:absolute;z-index:4;bottom:14px;left:50%;transform:translateX(-50%);display:flex;padding:4px;gap:2px;background:#ffffffed;border:1px solid #dce6eb;border-radius:10px;box-shadow:0 5px 20px #355b6e0d;white-space:nowrap}
+.dental-camera-presets button {font:inherit;font-size:11px;color:#47626d;background:transparent;border:0;border-radius:6px;padding:8px 10px;cursor:pointer}
+.dental-camera-presets button.active {background:#e3f2f2;color:#126d73}
+.dental-label-layer {position:absolute;inset:0;pointer-events:none;z-index:3}
+.dental-tooth-label {position:absolute;top:0;left:0;background:#fffffff2;color:#274d59;border:1px solid #d8e4e9;border-radius:5px;padding:2px 4px;font:600 10px/1.2 system-ui,sans-serif;box-shadow:0 1px 3px #173b4920;will-change:transform}
+.dental-tooth-label.selected {background:#126f77;color:white;border-color:#126f77}
+.dental-motion-bar {display:flex;align-items:center;gap:9px;padding:13px 18px;border-top:1px solid #dfe8ec;flex-wrap:wrap}
+.dental-motion-bar label {font-size:11px;font-weight:600;color:#536c75}
+.dental-motion-bar input {width:110px;accent-color:#197781;cursor:pointer}
+.dental-motion-bar output {font-size:12px;font-variant-numeric:tabular-nums;min-width:27px;color:#335663}
+.dental-motion-bar button {border:1px solid #d6e3e7;border-radius:7px;background:white;padding:7px 10px;color:#3c606b;font:inherit;font-size:11px;cursor:pointer}
+.dental-motion-bar button[aria-pressed=true] {background:#dff1ee;border-color:#54a29c;color:#135d5f}
+.dental-instructions {font-size:11px;color:#6a818a;padding:0 18px 14px;margin:0;line-height:1.7}
+.dental-inspector {padding:24px 20px;background:white;border-left:1px solid #e0e9ed;min-width:0}
+.dental-eyebrow {font-size:9px;letter-spacing:.13em;font-weight:700;color:#23828b}
+.dental-inspector h3 {margin:14px 0 5px;font-size:22px;color:#183c49}
+.dental-inspector>p {font-size:12px;color:#607c87;line-height:1.6}
+.dental-inspector>label {display:block;margin:18px 0 7px;font-size:11px;font-weight:600;color:#3c5e6c}
+.dental-inspector>select {width:100%;border:1px solid #d7e2e7;border-radius:8px;font:inherit;font-size:12px;padding:10px 6px;color:#284d59;background:#fbfcfd}
+.dental-surface-status {display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin:17px 0}
+.dental-face {border:1px solid #dfe7eb;border-radius:7px;text-align:center;padding:7px 0;color:#466675;font-size:11px}
+.dental-face span {display:block;width:10px;height:10px;border:1px solid #cad7dd;background:#fff;border-radius:50%;margin:5px auto 0}
+.dental-face[data-color=NEGRO] span {background:#232b36;border-color:#232b36}
+.dental-face[data-color=AMARILLO] span {background:#f2bd27;border-color:#d5a423}
+.dental-face[data-color=VERDE] span {background:#28a46f;border-color:#28a46f}
+.dental-face.active {border-color:#308a93;box-shadow:0 0 0 1px #308a93}
+.dental-inspector .dental-active-tool {color:#234c57;font-weight:600;font-size:12px}
+.dental-inspector .button {width:100%;justify-content:center;margin:2px 0 6px}
+.dental-inspector .button:disabled {opacity:.45;cursor:not-allowed}
+.dental-inspector .dental-register-note {font-size:11px;color:#71868e}
+.dental-model-note {margin-top:22px;padding-top:16px;border-top:1px solid #e5edef;color:#82949b;font-size:10px;line-height:1.7}
+.dental-3d-error {padding:12px 16px;border:1px solid #e9cf98;border-radius:9px;background:#fff9ec;color:#75551d;font-size:13px}
+.dental-3d button:focus-visible,.dental-view-tabs button:focus-visible {outline:3px solid #67b5c5;outline-offset:2px}
+.dental-3d:fullscreen {width:100%;height:100%;border-radius:0;grid-template-columns:minmax(0,1fr) 285px}
+.dental-3d:fullscreen .dental-canvas-host {height:calc(100vh - 155px)}
+@media(max-width:1100px) {.dental-3d{grid-template-columns:minmax(0,1fr)}.dental-inspector{border-left:0;border-top:1px solid #e0e9ed}.dental-canvas-host{height:450px}.dental-inspector .button{max-width:300px}}
+@media(max-width:600px) {.dental-canvas-host{height:360px}.dental-scene-toolbar{padding:10px;gap:10px}.dental-camera-presets button{font-size:10px;padding:7px}.dental-motion-bar{padding:12px;gap:8px}.dental-motion-bar input{width:95px}.dental-orientation{font-size:8px;left:10px;right:10px}.dental-3d:fullscreen{grid-template-columns:minmax(0,1fr)}.dental-3d:fullscreen .dental-inspector{display:none}}
+@media(prefers-reduced-motion:reduce) {#dental-spin{display:none}}
+@media print {.dental-3d,.dental-view-bar,.dental-3d-error{display:none!important}.odontogram[hidden]{display:block!important}}

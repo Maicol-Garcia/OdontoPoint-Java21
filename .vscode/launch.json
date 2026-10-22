@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "OdontoPoint · MySQL",
+      "request": "launch",
+      "mainClass": "pe.odontopoint.OdontoPointApplication",
+      "cwd": "${workspaceFolder}",
+      "args": "--spring.profiles.active=mysql"
+    },
+    {
+      "type": "java",
+      "name": "OdontoPoint · Prueba local H2",
+      "request": "launch",
+      "mainClass": "pe.odontopoint.OdontoPointApplication",
+      "cwd": "${workspaceFolder}",
+      "args": "--spring.profiles.active=h2"
+    }
+  ]
+}

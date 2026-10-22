@@ -1,0 +1,58 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:fragment="head(title)">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <title th:text="${title} + ' · OdontoPoint'">OdontoPoint</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}" />
+    <link rel="stylesheet" th:href="@{/css/agenda.css}" />
+    <link rel="stylesheet" th:href="@{/css/odontogram-3d.css}" />
+    <link rel="stylesheet" th:href="@{/css/ingresos.css}" />
+    <link rel="icon" th:href="@{/images/tooth.svg}" type="image/svg+xml" />
+  </head>
+  <body>
+    <aside th:fragment="sidebar(active)" class="sidebar">
+      <a class="brand" href="/"
+        ><span class="brand-icon"><img src="/images/tooth.svg" alt="" /></span
+        ><span
+          >Odonto<span class="brand-light">Point</span
+          ><small>GESTIÓN ODONTOLÓGICA</small></span
+        ></a
+      >
+      <div class="nav-label">CONSULTORIO</div>
+      <nav>
+        <a th:classappend="${active=='patients'?'active':''}" href="/"
+          ><span>▦</span> Pacientes e historias</a
+        ><a th:classappend="${active=='new'?'active':''}" href="/patients/new"
+          ><span>＋</span> Nueva historia clínica</a
+        ><a th:classappend="${active=='agenda'?'active':''}" href="/agenda"><span>▦</span> Agenda de citas</a><a th:classappend="${active=='catalogo'?'active':''}" href="/catalogo"><span>▤</span> Catálogo de servicios</a><a th:classappend="${active=='ingresos'?'active':''}" href="/ingresos"><span>↗</span> Control de ingresos</a><a href="/exports/patients.xlsx"><span>↓</span> Exportar a Excel</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="nav-label">MI CUENTA</div>
+        <a class="account-link" href="/account"
+          ><span
+            class="avatar"
+            th:text="${#strings.toUpperCase(#strings.substring(username,0,1))}"
+            >A</span
+          ><span
+            ><b th:text="${username}">Administrador</b
+            ><small>Cuenta del consultorio</small></span
+          ></a
+        >
+        <form th:action="@{/logout}" method="post">
+          <button class="logout" type="submit">Cerrar sesión ↗</button>
+        </form>
+      </div>
+    </aside>
+    <div
+      th:fragment="toast"
+      id="toast"
+      class="toast"
+      role="status"
+      aria-live="polite"
+      hidden
+    ></div>
+  </body>
+</html>

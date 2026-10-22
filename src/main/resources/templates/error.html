@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{fragments :: head('No disponible')}"></head>
+  <body class="error-page">
+    <main class="card">
+      <img src="/images/tooth.svg" width="60" alt="" />
+      <h1>No se pudo abrir esta página</h1>
+      <p>
+        Vuelve al directorio para continuar. Si estabas adjuntando un archivo,
+        utiliza JPG o PNG de hasta 5 MB.
+      </p>
+      <a class="button primary" href="/">Volver a pacientes</a>
+    </main>
+  </body>
+</html>

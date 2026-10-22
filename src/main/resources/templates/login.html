@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{fragments :: head('Iniciar sesión')}"></head>
+  <body class="auth-page">
+    <section class="auth-story">
+      <a class="brand" href="/"
+        ><span class="brand-icon"><img src="/images/tooth.svg" alt="" /></span
+        ><span
+          >Odonto<span class="brand-light">Point</span
+          ><small>GESTIÓN ODONTOLÓGICA</small></span
+        ></a
+      >
+      <div class="auth-copy">
+        <span class="eyebrow">CADA HISTORIA, BIEN CUIDADA</span>
+        <h1>Más cerca de tus<br />pacientes.</h1>
+        <p>
+          Tu información clínica organizada.<br />Más tiempo para lo que
+          importa.
+        </p>
+      </div>
+      <div class="tooth-art">
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+        <img src="/images/tooth.svg" alt="Ilustración de un diente" /><span
+          class="art-badge"
+          >✓ Historias en un solo lugar</span
+        >
+      </div>
+      <footer>OdontoPoint · Gestión clínica odontológica</footer>
+    </section>
+    <main class="auth-main">
+      <div class="auth-box">
+        <span class="pill">TU CONSULTORIO DIGITAL</span>
+        <h2>Bienvenido de nuevo</h2>
+        <p class="muted">Ingresa a tu espacio de trabajo.</p>
+        <div class="alert error" th:if="${param.error}">
+          Usuario o contraseña incorrectos.
+        </div>
+        <div class="alert success" th:if="${param.created}">
+          Tu cuenta está lista. Inicia sesión para continuar.
+        </div>
+        <div class="alert success" th:if="${param.logout}">
+          Sesión cerrada correctamente.
+        </div>
+        <form th:action="@{/login}" method="post" class="auth-form">
+          <label
+            >Usuario<input
+              name="username"
+              autocomplete="username"
+              placeholder="Tu usuario"
+              required
+              autofocus /></label
+          ><label
+            >Contraseña<input
+              type="password"
+              name="password"
+              autocomplete="current-password"
+              placeholder="Tu contraseña"
+              required /></label
+          ><button class="button primary full" type="submit">
+            Ingresar a OdontoPoint <span>→</span>
+          </button>
+        </form>
+        <p class="auth-note">Acceso reservado al personal del consultorio.</p>
+      </div>
+    </main>
+  </body>
+</html>

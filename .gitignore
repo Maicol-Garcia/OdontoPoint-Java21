@@ -1,0 +1,14 @@
+target/
+datos-web/
+logs/
+*.log
+.DS_Store
+
+/Sistema-OdontoPoint/
+/bin/
+/target/
+/datos/
+.env
+*.log
+*.mv.db
+*.trace.db

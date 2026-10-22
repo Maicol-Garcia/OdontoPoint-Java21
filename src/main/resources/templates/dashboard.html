@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{fragments :: head('Pacientes')}"></head>
+  <body>
+    <aside th:replace="~{fragments :: sidebar('patients')}"></aside>
+    <main class="workspace">
+      <header class="topbar">
+        <span>Consultorio / <b>Pacientes e historias</b></span
+        ><span class="status-dot">Espacio clínico</span>
+      </header>
+      <div class="page-content">
+        <div class="page-heading">
+          <div>
+            <span class="eyebrow">DIRECTORIO CLÍNICO</span>
+            <h1>Pacientes e historias</h1>
+            <p class="muted">
+              Organiza cada consulta, desde la primera visita.
+            </p>
+          </div>
+          <a class="button primary" href="/patients/new">＋ Nueva historia</a>
+        </div>
+        <div class="stats">
+          <article class="stat">
+            <span class="stat-icon">♧</span>
+            <div>
+              <p>Pacientes registrados</p>
+              <strong th:text="${total}">0</strong
+              ><small>Historias clínicas en tu consultorio</small>
+            </div>
+          </article>
+          <article class="stat">
+            <span class="stat-icon">▤</span>
+            <div>
+              <p>Nuevas historias este mes</p>
+              <strong th:text="${month}">0</strong
+              ><small>Registro automático por orden de guardado</small>
+            </div>
+          </article>
+          <article class="stat stat-accent">
+            <div>
+              <span class="eyebrow">ARCHIVO CLÍNICO</span>
+              <h3>Tu información, disponible</h3>
+              <p>Descarga las historias y sus detalles.</p>
+              <a href="/exports/patients.xlsx">Exportar a Excel ↗</a>
+            </div>
+          </article>
+        </div>
+        <section class="card patient-card">
+          <div class="card-toolbar">
+            <h2>
+              Directorio de pacientes
+              <span class="count" th:text="${patients.totalElements}">0</span>
+            </h2>
+            <form method="get" action="/" class="search">
+              <input
+                name="q"
+                th:value="${q}"
+                placeholder="Buscar por nombre, DNI o historia"
+                aria-label="Buscar paciente"
+              /><button class="button secondary">Buscar</button>
+            </form>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Historia clínica</th>
+                  <th>Paciente</th>
+                  <th>DNI</th>
+                  <th>Fecha de registro</th>
+                  <th>Saldo</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="p : ${patients.content}">
+                  <td>
+                    <span class="history-badge" th:text="${p.number}"></span>
+                  </td>
+                  <td>
+                    <strong th:text="${p.form.fullName}"></strong
+                    ><small class="table-sub" th:text="${p.form.phone}"></small>
+                  </td>
+                  <td th:text="${p.form.dni}"></td>
+                  <td th:text="${p.createdAt.substring(0,10)}"></td>
+                  <td
+                    th:text="'S/ ' + ${#numbers.formatDecimal(p.balance,1,2)}"
+                  ></td>
+                  <td>
+                    <a class="text-link" th:href="@{/patients/{id}(id=${p.id})}"
+                      >Abrir historia →</a
+                    >
+                  </td>
+                </tr>
+                <tr th:if="${patients.empty}">
+                  <td colspan="6">
+                    <div class="empty">
+                      <span class="empty-icon">＋</span>
+                      <h3
+                        th:text="${q.isEmpty() ? 'Tu primera historia empieza aquí' : 'No encontramos coincidencias'}"
+                      ></h3>
+                      <p
+                        th:text="${q.isEmpty() ? 'Registra un paciente para comenzar a organizar tu consultorio.' : 'Prueba con otro nombre, DNI o número.'}"
+                      ></p>
+                      <a
+                        th:if="${q.isEmpty()}"
+                        href="/patients/new"
+                        class="button primary"
+                        >Registrar paciente</a
+                      >
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <footer class="pagination">
+            <span
+              th:text="'Página ' + ${patients.number + 1} + ' de ' + ${patients.totalPages == 0 ? 1 : patients.totalPages}"
+            ></span>
+            <div>
+              <a
+                class="button secondary"
+                th:if="${patients.hasPrevious()}"
+                th:href="@{/(q=${q},page=${patients.number - 1})}"
+                >← Anterior</a
+              ><a
+                class="button secondary"
+                th:if="${patients.hasNext()}"
+                th:href="@{/(q=${q},page=${patients.number + 1})}"
+                >Siguiente →</a
+              >
+            </div>
+          </footer>
+        </section>
+        <p class="footer-note">
+          OdontoPoint · La fecha y el número de historia se asignan al guardar
+          por primera vez.
+        </p>
+      </div>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+ODONTOPOINT - ACTUALIZACION DE EVIDENCIAS Y FECHAS
+
+1. Evidencias clinicas
+- Las nuevas evidencias clinicas solo se cargan como TRATAMIENTO u OTRO.
+- La vista "Todas" ahora recupera todas las evidencias existentes de la historia.
+- Si existen evidencias antiguas de tipo PAGO, se muestran como "Comprobante historico" para no ocultar archivos ya guardados.
+- Los comprobantes nuevos siguen adjuntandose exclusivamente en Acta / comprobante dentro de Pagos.
+
+2. Fechas
+- Toda fecha visible o editable por el usuario usa dd/mm/aaaa.
+- Las fechas con hora usan dd/mm/aaaa HH:mm.
+- MySQL conserva internamente DATE/DATETIME, por lo que no cambia la estructura de la base de datos.
+- Los archivos Excel y consultas SQL de ejemplo tambien usan dd/mm/aaaa.
+
+3. No necesitas recrear la base de datos para estos cambios.
+
+4. Compila con:
+   mvn clean compile
+
+5. Ejecuta con:
+   mvn spring-boot:run
